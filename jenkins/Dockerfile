@@ -1,5 +1,5 @@
 FROM jenkins/jenkins:lts
-MAINTAINER pawan uppadey <pawan.uppadey@gmail.com>
+MAINTAINER Kiran 
 
 #Install Jenkins plugin to make this pipeline work
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
@@ -12,6 +12,7 @@ COPY setupJenkins.groovy /usr/share/jenkins/ref/init.groovy.d/
 USER root
 RUN apt-get update && apt-get install -y \
 	python-pip \
+	python3-pip \
 	curl \
 	maven \
 	git \
@@ -33,12 +34,12 @@ RUN apt-get install -y nikto
 #Install virtualenv to isolate each project dependencies
 RUN pip install virtualenv
 #Install python SCA tool/dependency checker, license check
-RUN pip install safety
-RUN pip install liccheck
+RUN pip3 install safety
+RUN pip3 install liccheck
 #Install the git history checker for secrets
-RUN pip install trufflehog
+RUN pip3 install trufflehog
 #Install python SAST tool
-RUN pip install bandit
+RUN pip3 install bandit
 
 # Used for authenticated DAST scan
 RUN pip install selenium
